@@ -226,7 +226,7 @@ class PLC:
 		    datatype = S7WLWord
             addr_str = register[2:]
             addr = int(addr_str)
-        self.WriteMemoryBlock(areaM, addr, 0, datatype, value)
+            self.WriteMemoryBlock(areaM, addr, 0, datatype, value)
     
 def setup_custom_logger(name):
     formatter = logging.Formatter(fmt='%(asctime)s %(levelname)-8s %(message)s',

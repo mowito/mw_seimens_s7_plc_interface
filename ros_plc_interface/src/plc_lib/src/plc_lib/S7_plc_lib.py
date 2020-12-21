@@ -1,4 +1,4 @@
- #!/usr/bin/python3
+#!/usr/bin/env python2
 
  # ************************************************************************ #
  # COPYRIGHT MOWITO ROBOTIC SYSTEMS Pvt Ltd.                                #
@@ -219,10 +219,10 @@ class PLC:
                 areaM=0x82
             if(register[0].lower()=='i'):
                 areaM=0x81
-        if(register[1].lower()=='d'):
-            datatype = S7WLDWord
-        if(register[1].lower()=='w'):
-            datatype = S7WLWord
+            if(register[1].lower()=='d'):
+                datatype = S7WLDWord
+            if(register[1].lower()=='w'):
+                datatype = S7WLWord
             addr_str = register[2:]
             addr = int(addr_str)
-        self.WriteMemoryBlock(areaM, addr, 0, datatype, value)
+            self.WriteMemoryBlock(areaM, addr, 0, datatype, value)

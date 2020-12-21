@@ -13,21 +13,21 @@ fi
 
 echo_and_run() { echo "+ $@" ; "$@" ; }
 
-echo_and_run cd "/home/ankur/Documents/rucha_mowito/mw_seimens_s7_plc_interface/ros_plc_interface/src/plc_lib"
+echo_and_run cd "/home/ankur/mw_seimens_s7_plc_interface/ros_plc_interface/src/plc_lib"
 
 # ensure that Python install destination exists
-echo_and_run mkdir -p "$DESTDIR/home/ankur/Documents/rucha_mowito/mw_seimens_s7_plc_interface/ros_plc_interface/install/lib/python3/dist-packages"
+echo_and_run mkdir -p "$DESTDIR/home/ankur/mw_seimens_s7_plc_interface/ros_plc_interface/install/lib/python3/dist-packages"
 
 # Note that PYTHONPATH is pulled from the environment to support installing
 # into one location when some dependencies were installed in another
 # location, #123.
 echo_and_run /usr/bin/env \
-    PYTHONPATH="/home/ankur/Documents/rucha_mowito/mw_seimens_s7_plc_interface/ros_plc_interface/install/lib/python3/dist-packages:/home/ankur/Documents/rucha_mowito/mw_seimens_s7_plc_interface/ros_plc_interface/build/lib/python3/dist-packages:$PYTHONPATH" \
-    CATKIN_BINARY_DIR="/home/ankur/Documents/rucha_mowito/mw_seimens_s7_plc_interface/ros_plc_interface/build" \
+    PYTHONPATH="/home/ankur/mw_seimens_s7_plc_interface/ros_plc_interface/install/lib/python3/dist-packages:/home/ankur/mw_seimens_s7_plc_interface/ros_plc_interface/build/lib/python3/dist-packages:$PYTHONPATH" \
+    CATKIN_BINARY_DIR="/home/ankur/mw_seimens_s7_plc_interface/ros_plc_interface/build" \
     "/usr/bin/python3" \
-    "/home/ankur/Documents/rucha_mowito/mw_seimens_s7_plc_interface/ros_plc_interface/src/plc_lib/setup.py" \
+    "/home/ankur/mw_seimens_s7_plc_interface/ros_plc_interface/src/plc_lib/setup.py" \
      \
-    build --build-base "/home/ankur/Documents/rucha_mowito/mw_seimens_s7_plc_interface/ros_plc_interface/build/plc_lib" \
+    build --build-base "/home/ankur/mw_seimens_s7_plc_interface/ros_plc_interface/build/plc_lib" \
     install \
     --root="${DESTDIR-/}" \
-    --install-layout=deb --prefix="/home/ankur/Documents/rucha_mowito/mw_seimens_s7_plc_interface/ros_plc_interface/install" --install-scripts="/home/ankur/Documents/rucha_mowito/mw_seimens_s7_plc_interface/ros_plc_interface/install/bin"
+    --install-layout=deb --prefix="/home/ankur/mw_seimens_s7_plc_interface/ros_plc_interface/install" --install-scripts="/home/ankur/mw_seimens_s7_plc_interface/ros_plc_interface/install/bin"

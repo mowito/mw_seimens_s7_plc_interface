@@ -1,8 +1,8 @@
-# Install script for directory: /home/ankur/Documents/rucha_mowito/mw_seimens_s7_plc_interface/ros_plc_interface/src/plc_lib
+# Install script for directory: /home/ankur/mw_seimens_s7_plc_interface/ros_plc_interface/src/plc_lib
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/ankur/Documents/rucha_mowito/mw_seimens_s7_plc_interface/ros_plc_interface/install")
+  set(CMAKE_INSTALL_PREFIX "/home/ankur/mw_seimens_s7_plc_interface/ros_plc_interface/install")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -38,21 +38,21 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  include("/home/ankur/Documents/rucha_mowito/mw_seimens_s7_plc_interface/ros_plc_interface/build/plc_lib/catkin_generated/safe_execute_install.cmake")
+  include("/home/ankur/mw_seimens_s7_plc_interface/ros_plc_interface/build/plc_lib/catkin_generated/safe_execute_install.cmake")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/ankur/Documents/rucha_mowito/mw_seimens_s7_plc_interface/ros_plc_interface/build/plc_lib/catkin_generated/installspace/plc_lib.pc")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/ankur/mw_seimens_s7_plc_interface/ros_plc_interface/build/plc_lib/catkin_generated/installspace/plc_lib.pc")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/plc_lib/cmake" TYPE FILE FILES
-    "/home/ankur/Documents/rucha_mowito/mw_seimens_s7_plc_interface/ros_plc_interface/build/plc_lib/catkin_generated/installspace/plc_libConfig.cmake"
-    "/home/ankur/Documents/rucha_mowito/mw_seimens_s7_plc_interface/ros_plc_interface/build/plc_lib/catkin_generated/installspace/plc_libConfig-version.cmake"
+    "/home/ankur/mw_seimens_s7_plc_interface/ros_plc_interface/build/plc_lib/catkin_generated/installspace/plc_libConfig.cmake"
+    "/home/ankur/mw_seimens_s7_plc_interface/ros_plc_interface/build/plc_lib/catkin_generated/installspace/plc_libConfig-version.cmake"
     )
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/plc_lib" TYPE FILE FILES "/home/ankur/Documents/rucha_mowito/mw_seimens_s7_plc_interface/ros_plc_interface/src/plc_lib/package.xml")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/plc_lib" TYPE FILE FILES "/home/ankur/mw_seimens_s7_plc_interface/ros_plc_interface/src/plc_lib/package.xml")
 endif()
 

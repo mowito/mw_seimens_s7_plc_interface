@@ -1,8 +1,8 @@
-# Install script for directory: /home/ankur/Documents/rucha_mowito/mw_seimens_s7_plc_interface/ros_plc_interface/src/remote_teleop
+# Install script for directory: /home/ankur/mw_seimens_s7_plc_interface/ros_plc_interface/src/remote_teleop
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/ankur/Documents/rucha_mowito/mw_seimens_s7_plc_interface/ros_plc_interface/install")
+  set(CMAKE_INSTALL_PREFIX "/home/ankur/mw_seimens_s7_plc_interface/ros_plc_interface/install")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -38,21 +38,21 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/ankur/Documents/rucha_mowito/mw_seimens_s7_plc_interface/ros_plc_interface/build/remote_teleop/catkin_generated/installspace/remote_teleop.pc")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/ankur/mw_seimens_s7_plc_interface/ros_plc_interface/build/remote_teleop/catkin_generated/installspace/remote_teleop.pc")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/remote_teleop/cmake" TYPE FILE FILES
-    "/home/ankur/Documents/rucha_mowito/mw_seimens_s7_plc_interface/ros_plc_interface/build/remote_teleop/catkin_generated/installspace/remote_teleopConfig.cmake"
-    "/home/ankur/Documents/rucha_mowito/mw_seimens_s7_plc_interface/ros_plc_interface/build/remote_teleop/catkin_generated/installspace/remote_teleopConfig-version.cmake"
+    "/home/ankur/mw_seimens_s7_plc_interface/ros_plc_interface/build/remote_teleop/catkin_generated/installspace/remote_teleopConfig.cmake"
+    "/home/ankur/mw_seimens_s7_plc_interface/ros_plc_interface/build/remote_teleop/catkin_generated/installspace/remote_teleopConfig-version.cmake"
     )
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/remote_teleop" TYPE FILE FILES "/home/ankur/Documents/rucha_mowito/mw_seimens_s7_plc_interface/ros_plc_interface/src/remote_teleop/package.xml")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/remote_teleop" TYPE FILE FILES "/home/ankur/mw_seimens_s7_plc_interface/ros_plc_interface/src/remote_teleop/package.xml")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/remote_teleop" TYPE PROGRAM FILES "/home/ankur/Documents/rucha_mowito/mw_seimens_s7_plc_interface/ros_plc_interface/build/remote_teleop/catkin_generated/installspace/teleop_plc.py")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/remote_teleop" TYPE PROGRAM FILES "/home/ankur/mw_seimens_s7_plc_interface/ros_plc_interface/build/remote_teleop/catkin_generated/installspace/teleop_plc.py")
 endif()
 
