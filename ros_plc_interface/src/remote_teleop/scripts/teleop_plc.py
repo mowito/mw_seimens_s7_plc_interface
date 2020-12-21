@@ -90,7 +90,7 @@ class TeleopPLC:
         # compute odometry information 
         dt      = (current_time - self.lat_time).to_sec()
         dx      = (v_x*math.cos(self.pose.theta) - v_y*math.sin(self.pose.theta))*dt
-        dy      = (v_x*math.cos(self.pose.theta) + v_y*math.sin(self.pose.theta))*dt
+        dy      = (v_x*math.sin(self.pose.theta) + v_y*math.cos(self.pose.theta))*dt
         dtheta  = w * dt
         self.pose.x     = self.pose.x + dx
         self.pose.y     = self.pose.y + dy
@@ -155,8 +155,8 @@ class TeleopPLC:
         w     = (self.wheel_radius/self.wheel_dist)*(w_r - w_l)
 
         # Calculate x and y component of linear velocity
-        v_x = v_lin * (1/math.sqrt(2))
-        v_y = v_lin * (1/math.sqrt(2))
+        v_x = v_lin
+        v_y = 0.0
 
         # Return the linear velocity components(v_x and v_y) and angular velocity(w)
         return v_x, v_y, w

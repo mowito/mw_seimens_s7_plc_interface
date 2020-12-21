@@ -7,9 +7,6 @@
 # new environment variables
 
 # modified environment variables
-export CMAKE_PREFIX_PATH="/home/ankur/mw_seimens_s7_plc_interface/ros_plc_interface/devel:$CMAKE_PREFIX_PATH"
-export LD_LIBRARY_PATH="/home/ankur/mw_seimens_s7_plc_interface/ros_plc_interface/devel/lib:$LD_LIBRARY_PATH"
-export PWD='/home/ankur/mw_seimens_s7_plc_interface/ros_plc_interface/build'
-export PYTHONPATH="/home/ankur/mw_seimens_s7_plc_interface/ros_plc_interface/devel/lib/python3/dist-packages:$PYTHONPATH"
-export ROSLISP_PACKAGE_DIRECTORIES='/home/ankur/mw_seimens_s7_plc_interface/ros_plc_interface/devel/share/common-lisp'
-export ROS_PACKAGE_PATH="/home/ankur/mw_seimens_s7_plc_interface/ros_plc_interface/src:$ROS_PACKAGE_PATH"
+export PKG_CONFIG_PATH='/opt/ros/noetic/lib/pkgconfig'
+export PWD='/home/ankur/Documents/rucha_mowito/mw_seimens_s7_plc_interface/ros_plc_interface/build'
+export ROS_PACKAGE_PATH='/home/ankur/Documents/rucha_mowito/mw_seimens_s7_plc_interface/ros_plc_interface/src:/opt/ros/noetic/share'

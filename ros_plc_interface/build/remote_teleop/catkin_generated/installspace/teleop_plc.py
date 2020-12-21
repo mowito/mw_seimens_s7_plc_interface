@@ -19,6 +19,11 @@ class TeleopPLC:
         self.encoder2_val = 0
         self.wheel_radius = rospy.get_param("wheel_radius", 0.075)
         self.wheel_dist   = rospy.get_param("wheel_dist", 0.435)
+        self.lat_time = rospy.Time.now()
+        self.pose = Pose2D()
+        self.pose.x = 0.0
+        self.pose.y = 0.0
+        self.pose.theta = 0.0
 
         # Defining the registers to read PLC actuators and sensors
         self.s7_plc = PLC()
@@ -30,7 +35,7 @@ class TeleopPLC:
 
         # Defining odometer publish frequency
         self.odom_pub_freq = rospy.get_param("odom_pub_freq", 10)
-        self.odom_pub_duration = 1/self.odom_pub_freq
+        self.odom_pub_duration = 1/(self.odom_pub_freq)
 
         # Defining publishers
         self.odom_pub = rospy.Publisher("odom", Odometry, queue_size=10)
@@ -46,60 +51,56 @@ class TeleopPLC:
         rospy.loginfo("Reading linear velocity [x y] = [%s %s]", velocity_data.linear.x, velocity_data.linear.y)
 
         # connect to plc
-        self.s7_plc.connect_to_plc()
+        #self.s7_plc.connect_to_plc()
 
         # proceed to remote control only if PLC connection status is true
-        if (s7_plc.plc_connection_status()==True):
+        if (True):#s7_plc.plc_connection_status()==True):
             # Get radius, wheel_dist from parameters
             radius = rospy.get_param("radius", 0.075)
             wheel_dist = rospy.get_param("wheel_dist", 0.435)
 
             # Get Motor1 and Motor2 velocty
-            motor1, motor2 = _velocity_to_rpm(velocity_data)
+            motor1, motor2 = self._velocity_to_rpm(velocity_data)
         
             # Write to PLC motors
-            self.s7_plc.plc_write(self.m1_addr, motor1)
-            self.s7_plc.plc_write(self.m2_addr, motor2)
+            #self.s7_plc.plc_write(self.m1_addr, motor1)
+            #self.s7_plc.plc_write(self.m2_addr, motor2)
             rospy.loginfo("Motor1 RPM : %s", str(motor1))
             rospy.loginfo("Motor2 RPM : %s", str(motor2))
 
             # Read Encoder Data from PLC
-            self.encoder1_val = s7_plc.plc_read(self.encoder1_addr)
-            self.encoder2_val = s7_plc.plc_read(self.encoder2_addr)
+            #self.encoder1_val = s7_plc.plc_read(self.encoder1_addr)
+            #self.encoder2_val = s7_plc.plc_read(self.encoder2_addr)
+            self.encoder1_val = motor1
+            self.encoder2_val = motor2
         else:
             rospy.loginfo("Unable to connect to PLC... Remote control aborted")
 
     # A callback function to publish Odometry Data
-    def publish_odom_data(self):
+    def publish_odom_data(self, timer):
 
         odom_tf_broadcast = TransformBroadcaster()
 
-        # initialize Pose information
-        p = Pose2D()
-        p.x = 0.0
-        p.y = 0.0
-        p.theta = 0.0
-
         # Call function to convert encoder values to linear and angular velocities
-        v_x, v_y, w = _encoder_to_odometry()
+        v_x, v_y, w = self._encoder_to_odometry()
 
         # Set the current time and last recorded time
         current_time = rospy.Time.now()
 
         # compute odometry information 
-        dt      = self.odom_pub_duration
-        dx      = (v_x*math.cos(p.theta) - v_y*math.sin(p.theta))*dt
-        dy      = (v_x*math.cos(p.theta) + v_y*math.sin(p.theta))*dt
+        dt      = (current_time - self.lat_time).to_sec()
+        dx      = (v_x*math.cos(self.pose.theta) - v_y*math.sin(self.pose.theta))*dt
+        dy      = (v_x*math.sin(self.pose.theta) + v_y*math.cos(self.pose.theta))*dt
         dtheta  = w * dt
-        p.x     = p.x + dx
-        p.y     = p.y + dy
-        p.theta = p.theta + dtheta
+        self.pose.x     = self.pose.x + dx
+        self.pose.y     = self.pose.y + dy
+        self.pose.theta = self.pose.theta + dtheta
 
         # since all odometry is 6DOF we'll need a quaternion created from yaw
-        odom_quat = transformations.quaternion_from_euler(0, 0, p.theta)
+        odom_quat = transformations.quaternion_from_euler(0, 0, self.pose.theta)
 
         # publish the transformation on tf
-        odom_tf_broadcast.sendTransform((p.x, p.y, 0), odom_quat, current_time, "base_link", "odom")
+        odom_tf_broadcast.sendTransform((self.pose.x, self.pose.y, 0), odom_quat, current_time, "base_link", "odom")
 
         # publish odometry message over ROS
         odom_data = Odometry()
@@ -107,14 +108,16 @@ class TeleopPLC:
         odom_data.header.frame_id = "odom"
 
         # set the position
-        odom_data.pose.pose = Pose(Point(p.x, p.y, 0.), Quaternion(*odom_quat))
+        odom_data.pose.pose = Pose(Point(self.pose.x, self.pose.y, 0.), Quaternion(*odom_quat))
 
         # set the velocity
         odom_data.child_frame_id = "base_link"
         odom_data.twist.twist = Twist(Vector3(v_x, v_y, 0), Vector3(0, 0, w))
 
         # publish the message
-        odom_pub.publish(odom_data)
+        self.odom_pub.publish(odom_data)
+        
+        self.lat_time = current_time
 
     # A function to convert velocity to RPM
     def _velocity_to_rpm(self, velocity):
@@ -144,18 +147,18 @@ class TeleopPLC:
     # A function to convert encoder to odometry
     def _encoder_to_odometry(self):
         # Convert encoder data to linear and angular velocity
-        w_r = encoder1_val/9.549297
-        w_l = encoder2_val/9.549297
+        w_r = self.encoder1_val/9.549297
+        w_l = self.encoder2_val/9.549297
 
         # Calculate Linear and Angular velocity for the robot
-        v_lin = (self.radius/2)*(w_r + w_l)
-        w     = (self.radius/wheel_dist)*(w_r - w_l)
+        v_lin = (self.wheel_radius/2)*(w_r + w_l)
+        w     = (self.wheel_radius/self.wheel_dist)*(w_r - w_l)
 
         # Calculate x and y component of linear velocity
-        v_x = v_lin * (1/math.sqrt(2))
-        v_y = v_lin * (1/math.sqrt(2))
+        v_x = v_lin
+        v_y = 0.0
 
-        # Return the linear velocity components and angular velocity
+        # Return the linear velocity components(v_x and v_y) and angular velocity(w)
         return v_x, v_y, w
     
 
