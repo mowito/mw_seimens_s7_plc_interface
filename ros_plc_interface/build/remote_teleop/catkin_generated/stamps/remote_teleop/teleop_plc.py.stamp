@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 import rospy
 from plc_lib.S7_plc_lib import PLC
 from geometry_msgs.msg import Pose2D, Point, Pose, Quaternion, Vector3, Twist
@@ -25,8 +25,6 @@ class TeleopPLC:
         self.pose.x = 0.0
         self.pose.y = 0.0
         self.pose.theta = 0.0
-	self.plc_motor1_rpm = 0
-	self.plc_motor2_rpm = 0
 
         # Defining the registers to read PLC actuators and sensors
         self.s7_plc = PLC()
@@ -39,10 +37,7 @@ class TeleopPLC:
 
         # Defining odometer publish frequency
         self.odom_pub_freq = rospy.get_param("odom_pub_freq", 10)
-        self.odom_pub_duration = 1.0/(self.odom_pub_freq)
-
-	# connect to plc
-        self.s7_plc.connect_to_plc()
+        self.odom_pub_duration = 1/(self.odom_pub_freq)
 
         # Defining publishers
         self.odom_pub = rospy.Publisher("odom", Odometry, queue_size=10)
@@ -50,40 +45,44 @@ class TeleopPLC:
 
         # Defining Subscribers
         self.cmd_vel_sub = rospy.Subscriber("cmd_vel", Twist, self.cmd_vel_callback)
-
-	
          
     # A callback function for reading in cmd_vel
     def cmd_vel_callback(self, velocity_data):
 
         # print the velocity being read
-        rospy.loginfo("Reading linear velocity [x y w] = [%s %s %s]", velocity_data.linear.x, velocity_data.linear.y, velocity_data.angular.z)
+        rospy.loginfo("Reading linear velocity [x y] = [%s %s]", velocity_data.linear.x, velocity_data.linear.y)
 
-    	# Get Motor1 and Motor2 velocty
-    	motor1, motor2 = self._velocity_to_rpm(velocity_data)
-	self.plc_motor1_rpm = motor1
-	self.plc_motor2_rpm = motor2
+        # connect to plc
+        self.s7_plc.connect_to_plc()
+
+        # proceed to remote control only if PLC connection status is true
+        if (self.s7_plc.plc_connection_status()==True):
+            # Get radius, wheel_dist from parameters
+            radius = rospy.get_param("radius", 0.075)
+            wheel_dist = rospy.get_param("wheel_dist", 0.435)
+
+            # Get Motor1 and Motor2 velocty
+            motor1, motor2 = self._velocity_to_rpm(velocity_data)
+        
+            # Write to PLC motors
+            self.s7_plc.plc_write(self.m1_addr, motor1)
+            self.s7_plc.plc_write(self.m2_addr, motor2)
+            rospy.loginfo("Motor1 RPM : %s", str(motor1))
+            rospy.loginfo("Motor2 RPM : %s", str(motor2))
+
+            # Read Encoder Data from PLC
+            self.encoder1_val = s7_plc.plc_read(self.encoder1_addr)
+            self.encoder2_val = s7_plc.plc_read(self.encoder2_addr)
+            self.encoder1_val = motor1
+            self.encoder2_val = motor2
+        else:
+            rospy.loginfo("Unable to connect to PLC... Remote control aborted")
 
     # A callback function to publish Odometry Data
     def publish_odom_data(self, timer):
 
         odom_tf_broadcast = TransformBroadcaster()
-	
-	# Write to PLC motors
-    	self.s7_plc.plc_write(self.m1_addr, self.plc_motor1_rpm)
-    	self.s7_plc.plc_write(self.m2_addr, self.plc_motor2_rpm)
- 	# Read Encoder Data from PLC
-	if (self.s7_plc.plc_connection_status()==True):
-    	    self.encoder1_val = self.s7_plc.plc_read(self.encoder1_addr)
-    	    self.encoder2_val = self.s7_plc.plc_read(self.encoder2_addr)
-    	    
-	if (self.encoder1_val > 125):
-	    self.encoder1_val = self.encoder1_val - 2**32
-	if (self.encoder2_val > 125):
-	    self.encoder2_val = self.encoder2_val - 2**32
-	
-	rospy.loginfo("Motor1 RPM : %s", str(self.encoder1_val))
-    	rospy.loginfo("Motor2 RPM : %s", str(self.encoder2_val))
+
         # Call function to convert encoder values to linear and angular velocities
         v_x, v_y, w = self._encoder_to_odometry()
 
@@ -135,13 +134,13 @@ class TeleopPLC:
         m1_rpm = int(9.549297 * w_r)
         m2_rpm = int(9.549297 * w_l)
 
-        if (w_r < 0):
-	        m1_rpm = m1_rpm + 2**32
+        if (m1_rpm < 0):
+	        m1_rpm = m1_rpm + 2**8
         else:
 	        m1_rpm = m1_rpm
 
-        if (w_l < 0):
-	        m2_rpm = m2_rpm + 2**32
+        if (m2_rpm < 0):
+	        m2_rpm = m2_rpm + 2**8
         else:
 	        m2_rpm = m2_rpm
 

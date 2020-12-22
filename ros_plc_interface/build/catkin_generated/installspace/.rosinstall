@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/up/mw_seimens_s7_plc_interface/ros_plc_interface/install/setup.sh

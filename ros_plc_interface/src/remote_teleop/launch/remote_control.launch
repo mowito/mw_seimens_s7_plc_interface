@@ -7,8 +7,8 @@
   <param name = "plc_ip_addr" type = "string" value = "192.168.0.123" />
   <param name = "motor1_addr" type = "string" value = "MD6.0" />
   <param name = "motor2_addr" type = "string" value = "MD10" />
-  <param name = "encoder1_addr" type = "string" value = "MD14" />
-  <param name = "encoder2_addr" type = "string" value = "MD18" />
+  <param name = "encoder1_addr" type = "string" value = "MD20" />
+  <param name = "encoder2_addr" type = "string" value = "MD28" />
 
   <!-- run teleop_plc -->  
   <node pkg="remote_teleop" type="teleop_plc.py" name="teleop_plc" output="screen"/>
