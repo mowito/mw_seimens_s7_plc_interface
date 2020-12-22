@@ -11,6 +11,8 @@ Clone the repository
 
 `git clone https://github.com/mowito/mw_seimens_s7_plc_interface.git `
 
+`cd mw_seimens_s7_plc_interface`
+
 Change the brnach to 'pc_plc_interface_checks'
 
 `git checkout 'pc_plc_interface_checks'`

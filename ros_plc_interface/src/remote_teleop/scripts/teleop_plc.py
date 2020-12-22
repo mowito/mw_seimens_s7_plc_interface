@@ -19,7 +19,7 @@ class TeleopPLC:
         self.encoder2_val = 0
         self.wheel_radius = rospy.get_param("wheel_radius", 0.075)
         self.wheel_dist   = rospy.get_param("wheel_dist", 0.435)
-        self.lat_time = rospy.Time.now()
+        self.last_time = rospy.Time.now()
         self.pose = Pose2D()
         self.pose.x = 0.0
         self.pose.y = 0.0
@@ -28,6 +28,7 @@ class TeleopPLC:
         # Defining the registers to read PLC actuators and sensors
         self.s7_plc = PLC()
         self.plc_ip = rospy.get_param("plc_ip_addr", "192.168.0.123")
+        self.s7_plc.set_plc_address(self.plc_ip)
         self.m1_addr = rospy.get_param("motor1_addr", "MD6.0")
         self.m2_addr = rospy.get_param("motor2_addr", "MD10")
         self.encoder1_addr = rospy.get_param("encoder1_addr", "MD14")
@@ -51,10 +52,10 @@ class TeleopPLC:
         rospy.loginfo("Reading linear velocity [x y] = [%s %s]", velocity_data.linear.x, velocity_data.linear.y)
 
         # connect to plc
-        #self.s7_plc.connect_to_plc()
+        self.s7_plc.connect_to_plc()
 
         # proceed to remote control only if PLC connection status is true
-        if (True):#s7_plc.plc_connection_status()==True):
+        if (self.s7_plc.plc_connection_status()==True):
             # Get radius, wheel_dist from parameters
             radius = rospy.get_param("radius", 0.075)
             wheel_dist = rospy.get_param("wheel_dist", 0.435)
@@ -63,14 +64,14 @@ class TeleopPLC:
             motor1, motor2 = self._velocity_to_rpm(velocity_data)
         
             # Write to PLC motors
-            #self.s7_plc.plc_write(self.m1_addr, motor1)
-            #self.s7_plc.plc_write(self.m2_addr, motor2)
+            self.s7_plc.plc_write(self.m1_addr, motor1)
+            self.s7_plc.plc_write(self.m2_addr, motor2)
             rospy.loginfo("Motor1 RPM : %s", str(motor1))
             rospy.loginfo("Motor2 RPM : %s", str(motor2))
 
             # Read Encoder Data from PLC
-            #self.encoder1_val = s7_plc.plc_read(self.encoder1_addr)
-            #self.encoder2_val = s7_plc.plc_read(self.encoder2_addr)
+            self.encoder1_val = s7_plc.plc_read(self.encoder1_addr)
+            self.encoder2_val = s7_plc.plc_read(self.encoder2_addr)
             self.encoder1_val = motor1
             self.encoder2_val = motor2
         else:
@@ -88,7 +89,7 @@ class TeleopPLC:
         current_time = rospy.Time.now()
 
         # compute odometry information 
-        dt      = (current_time - self.lat_time).to_sec()
+        dt      = (current_time - self.last_time).to_sec()
         dx      = (v_x*math.cos(self.pose.theta) - v_y*math.sin(self.pose.theta))*dt
         dy      = (v_x*math.sin(self.pose.theta) + v_y*math.cos(self.pose.theta))*dt
         dtheta  = w * dt
@@ -117,7 +118,7 @@ class TeleopPLC:
         # publish the message
         self.odom_pub.publish(odom_data)
         
-        self.lat_time = current_time
+        self.last_time = current_time
 
     # A function to convert velocity to RPM
     def _velocity_to_rpm(self, velocity):
