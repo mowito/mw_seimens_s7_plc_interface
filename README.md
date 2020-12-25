@@ -28,7 +28,7 @@ To run this module follow the instructions below :
 
 1.  Go into the comm_check folder
 
-    `cd /mowito_plc_ws/src/mw_seimens_s7_plc_interface/comm_check/scripts`
+    `cd ~/mowito_plc_ws/src/mw_seimens_s7_plc_interface/comm_check`
 
 2. Run the python script
 
@@ -47,7 +47,7 @@ To use this module, follow the instructions provided below.
 
 1. go to the ros_plc_interface directory
 
-    `cd /mowito_plc_ws/`
+    `cd ~/mowito_plc_ws/`
 
 2. build the ROS packages
 
@@ -55,7 +55,7 @@ To use this module, follow the instructions provided below.
 
 3. source the ROS workspace
 
-    `source /mowito_plc_ws/devel/setup.bash`
+    `source ~/mowito_plc_ws/devel/setup.bash`
 
 4. run the launch file
 
