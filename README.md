@@ -32,7 +32,7 @@ To run this module follow the instructions below :
 
 2. Run the python script
 
-    `python3 interface_check.py`
+    `python3 unit_tests.py`
 
 Once the code completes execution, a log file named 'plc_init_checks.log' will be created in the **comm_check/scripts/** folder path which shall contain the result of the communication sanity check of the PC and PLC
 
