@@ -9,7 +9,7 @@ To download this repository and run the interface tests, run the following comma
 
 Make a Mowtio_PLC_workspce directory and Clone the repository
 
-`mkdir mowito_plc_ws/src && cd mowito_plc_ws/src`
+`mkdir -p mowito_plc_ws/src && cd mowito_plc_ws/src`
 
 `git clone https://github.com/mowito/mw_seimens_s7_plc_interface.git `
 
