@@ -40,19 +40,19 @@ class PLC:
         self.plc = snap7.client.Client()
         self.ip_address = "0.0.0.0"
         self.connection_status = False
-	self.debug = False
+        self.debug = False
 
     def set_plc_address(self, address):
         self.ip_address = address
 
     def plc_connection_status(self):
         self.connection_status = self.plc.get_connected()
-	return self.connection_status
+        return self.connection_status
 
     def connect_to_plc(self):
         self.plc = snap7.client.Client()
         self.plc.connect(self.ip_address, 0, 1)
-	self.connection_status = self.plc.get_connected()
+        self.connection_status = self.plc.get_connected()
         if(self.plc.get_connected() == False):
             print("ERROR : Unable to connect to PLC")
         else:
@@ -146,10 +146,10 @@ class PLC:
             length=4
             if(register.find(".") != -1):
                 start = int(register.split('.')[0][2:])
-		set_dword(data,0,value)
+                set_dword(data,0,value)
             else:
                 start = int(register[2:])
-    	    set_dword(data,0,value)
+            set_dword(data,0,value)
         if(register[1].lower()=='w'):
             out=output().word
             length=4
@@ -201,12 +201,12 @@ class PLC:
                 areaM=0x82
             if(register[0].lower()=='i'):
                 areaM=0x81
-	    if(register[1].lower()=='d'):
-		datatype = S7WLDWord
-	    if(register[1].lower()=='w'):
-		datatype = S7WLWord
+            if(register[1].lower()=='d'):
+                datatype = S7WLDWord
+            if(register[1].lower()=='w'):
+                datatype = S7WLWord
             addr_str = (register[2:])
-	    addr = int(addr_str) 
+            addr = int(addr_str) 
             return self.ReadMemoryBlock(areaM, addr, 0, datatype)
 
 
@@ -220,10 +220,10 @@ class PLC:
                 areaM=0x82
             if(register[0].lower()=='i'):
                 areaM=0x81
-	    if(register[1].lower()=='d'):
-		    datatype = S7WLDWord
-	    if(register[1].lower()=='w'):
-		    datatype = S7WLWord
+            if(register[1].lower()=='d'):
+                datatype = S7WLDWord
+            if(register[1].lower()=='w'):
+                datatype = S7WLWord
             addr_str = register[2:]
             addr = int(addr_str)
             self.WriteMemoryBlock(areaM, addr, 0, datatype, value)
@@ -255,8 +255,10 @@ def main():
 
     # connect to PLC
     logger.info('Connecting to PLC')
-    PLC1.connect_to_plc()
-
+    try:
+        PLC1.connect_to_plc()
+    except snap7.snap7exceptions.Snap7Exception:
+        logger.info('Connecting to PLC Failed... exiting')
     # List for the registers to be read and wrtitten to
     boolean_registers = ["QX0.1", "QX0.2", "IX0.0", "IX0.1", "IX0.2", "IX0.3", "IX0.4"]
     real_registers    = ["MD6.0", "MD10", "MD14", "MD18"]
@@ -347,12 +349,9 @@ def main():
         print (" ======== PLC INTERFACE TESTS COMPLETE ========")
         logger.info('Completed PLC Interface checks')
         print ("Please check log file for details related to the checks")
-        
     else:
-        print("\nERROR : Cannot perform Read/Write operations on PLC\n")
         logger.error('Unable to perform read/write checks on PLC as PLC is not connected.')
         logger.debug('Please check PC-Router/Switch link OR PLC-router/switch link')
-        #print("Exiting PLC diagnostics. Please refer to LOG file for details.")
         logger.info('Exiting PLC interface initialization checks')
         
 
