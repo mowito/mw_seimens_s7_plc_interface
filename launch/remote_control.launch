@@ -11,7 +11,7 @@
   <param name = "encoder2_addr" type = "string" value = "MD28" />
 
   <!-- run teleop_plc -->  
-  <node pkg="mw_seimens_s7_plc_interface" type="teleop_plc.py" name="teleop_plc" output="screen"/>
+  <node pkg="mw_seimens_s7_plc_interface" type="siemens_plc_controller.py" name="siemens_plc_controller" output="screen"/>
 
   <!-- run teleop_twist_keyboard -->
   <node pkg="teleop_twist_keyboard" type="teleop_twist_keyboard.py" name="teleop_twist_keyboard" output="screen"/>
