@@ -7,7 +7,9 @@ This repository is developed to perform the following tasks:
 
 To download this repository and run the interface tests, run the following commands:
 
-Clone the repository
+Make a Mowtio_PLC_workspce directory and Clone the repository
+
+`mkdir mowito_plc_ws/src && cd mowito_plc_ws/src`
 
 `git clone https://github.com/mowito/mw_seimens_s7_plc_interface.git `
 
@@ -26,7 +28,7 @@ To run this module follow the instructions below :
 
 1.  Go into the comm_check folder
 
-    `cd mw_seimens_s7_plc_interface/comm_check/scripts`
+    `cd /mowito_plc_ws/src/mw_seimens_s7_plc_interface/comm_check/scripts`
 
 2. Run the python script
 
@@ -45,7 +47,7 @@ To use this module, follow the instructions provided below.
 
 1. go to the ros_plc_interface directory
 
-    `cd ros_plc_interface`
+    `cd /mowito_plc_ws/`
 
 2. build the ROS packages
 
@@ -53,11 +55,11 @@ To use this module, follow the instructions provided below.
 
 3. source the ROS workspace
 
-    `source mw_seimens_s7_plc_interface/ros_plc_interface/devel/setup.bash`
+    `source /mowito_plc_ws/devel/setup.bash`
 
 4. run the launch file
 
-    `roslaunch remote_teleop remote_control.launch`
+    `roslaunch mw_seimens_s7_plc_interface remote_control.launch`
 
 5. provide velocity commands from the keyboard
 
