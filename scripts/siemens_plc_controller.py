@@ -246,7 +246,11 @@ class TeleopPLC:
         self.odom_pub_duration = 1.0/(self.odom_pub_freq)
 
 	# connect to plc
-        self.s7_plc.connect_to_plc()
+        try:
+            self.s7_plc.connect_to_plc()
+        except snap7.snap7exceptions.Snap7Exception:
+            rospy.loginfo("Unable to connect to PLC")
+            sys.exit()
 
         # Defining publishers
         self.odom_pub = rospy.Publisher("odom", Odometry, queue_size=10)
