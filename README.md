@@ -9,7 +9,7 @@ To download this repository and run the interface tests, run the following comma
 
 Make a Mowtio_PLC_workspce directory and Clone the repository
 
-`mkdir mowito_plc_ws/src && cd mowito_plc_ws/src`
+`mkdir -p mowito_plc_ws/src && cd mowito_plc_ws/src`
 
 `git clone https://github.com/mowito/mw_seimens_s7_plc_interface.git `
 
@@ -28,11 +28,11 @@ To run this module follow the instructions below :
 
 1.  Go into the comm_check folder
 
-    `cd /mowito_plc_ws/src/mw_seimens_s7_plc_interface/comm_check/scripts`
+    `cd ~/mowito_plc_ws/src/mw_seimens_s7_plc_interface/comm_check`
 
 2. Run the python script
 
-    `python3 interface_check.py`
+    `python3 unit_tests.py`
 
 Once the code completes execution, a log file named 'plc_init_checks.log' will be created in the **comm_check/scripts/** folder path which shall contain the result of the communication sanity check of the PC and PLC
 
@@ -47,7 +47,7 @@ To use this module, follow the instructions provided below.
 
 1. go to the ros_plc_interface directory
 
-    `cd /mowito_plc_ws/`
+    `cd ~/mowito_plc_ws/`
 
 2. build the ROS packages
 
@@ -55,7 +55,7 @@ To use this module, follow the instructions provided below.
 
 3. source the ROS workspace
 
-    `source /mowito_plc_ws/devel/setup.bash`
+    `source ~/mowito_plc_ws/devel/setup.bash`
 
 4. run the launch file
 
