@@ -3,6 +3,7 @@
 import rospy
 from geometry_msgs.msg import Pose2D, Point, Pose, Quaternion, Vector3, Twist
 from nav_msgs.msg import Odometry
+from mw_seimens_s7_plc_interface.msg import encoder_data
 from tf.broadcaster import TransformBroadcaster
 from tf import transformations
 import struct
@@ -255,6 +256,7 @@ class TeleopPLC:
         # Defining publishers
         self.odom_pub = rospy.Publisher("odom", Odometry, queue_size=10)
         self.timer    = rospy.Timer(rospy.Duration(self.odom_pub_duration), self.publish_odom_data)
+        self.encoder_pub = rospy.Publisher("encoder_pub", encoder_data, queue_size=10)
 
         # Defining Subscribers
         self.cmd_vel_sub = rospy.Subscriber("cmd_vel", Twist, self.cmd_vel_callback)
@@ -291,6 +293,12 @@ class TeleopPLC:
         
         rospy.loginfo("Motor1 RPM : %s", str(self.encoder1_val))
         rospy.loginfo("Motor2 RPM : %s", str(self.encoder2_val))
+        encoder = encoder_data()
+        encoder.stamp = rospy.Time.now()
+        encoder.right = self.encoder1_val
+        encoder.left  = self.encoder2_val
+        self.encoder_pub.publish(encoder)
+
         # Call function to convert encoder values to linear and angular velocities
         v_x, v_y, w = self._encoder_to_odometry()
 
