@@ -1,0 +1,6 @@
+2020-12-25 11:05:43 INFO     Beginning Interface initialization checks with Siemens S7 PLC
+2020-12-25 11:05:43 INFO     Connecting to PLC
+2020-12-25 11:05:44 INFO     Connecting to PLC Failed... exiting
+2020-12-25 11:05:44 ERROR    Unable to perform read/write checks on PLC as PLC is not connected.
+2020-12-25 11:05:44 DEBUG    Please check PC-Router/Switch link OR PLC-router/switch link
+2020-12-25 11:05:44 INFO     Exiting PLC interface initialization checks
