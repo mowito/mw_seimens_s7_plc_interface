@@ -1,8 +1,8 @@
 <?xml version="1.0" ?>
 <launch>
 
-  <param name = "radius" type = "double" value = "0.075" />
-  <param name = "wheel_dist" type = "double" value = "0.435" />
+  <param name = "radius" type = "double" value = "0.08" />
+  <param name = "wheel_dist" type = "double" value = "0.430" />
   <param name = "odom_pub_rate" type = "double" value = "10" />
   <param name = "plc_ip_addr" type = "string" value = "192.168.0.123" />
   <param name = "motor1_addr" type = "string" value = "MD6.0" />
