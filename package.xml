@@ -15,12 +15,20 @@
   <buildtool_depend>catkin</buildtool_depend>
   <build_depend>geometry_msgs</build_depend>
   <build_depend>rospy</build_depend>
+<<<<<<< HEAD
   <build_depend>encoder_data</build_depend>
+=======
+  <build_depend>message_generation</build_depend>
+>>>>>>> 36bd61ab54c53cc4383f4b1ed8ec229378065dc6
   <build_export_depend>geometry_msgs</build_export_depend>
   <build_export_depend>rospy</build_export_depend>
   <exec_depend>geometry_msgs</exec_depend>
   <exec_depend>rospy</exec_depend>
+<<<<<<< HEAD
   <exec_depend>encoder_data</exec_depend>
+=======
+  <exec_depend>message_runtime</exec_depend>
+>>>>>>> 36bd61ab54c53cc4383f4b1ed8ec229378065dc6
 
 
   <!-- The export tag contains other, unspecified, tags -->
