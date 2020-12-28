@@ -255,6 +255,7 @@ class TeleopPLC:
         # Defining publishers
         self.odom_pub = rospy.Publisher("odom", Odometry, queue_size=10)
         self.timer    = rospy.Timer(rospy.Duration(self.odom_pub_duration), self.publish_odom_data)
+        self.encoder_pub = rospy.Publisher("encoder_pub", Odometry, queue_size=10)
 
         # Defining Subscribers
         self.cmd_vel_sub = rospy.Subscriber("cmd_vel", Twist, self.cmd_vel_callback)
