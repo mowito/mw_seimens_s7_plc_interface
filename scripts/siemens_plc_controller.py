@@ -292,8 +292,6 @@ class TeleopPLC:
         if (self.encoder2_val > 125):
             self.encoder2_val = self.encoder2_val - 2**32
         
-        rospy.loginfo("Motor1 RPM : %s", str(self.encoder1_val))
-        rospy.loginfo("Motor2 RPM : %s", str(self.encoder2_val))
         encoder = encoder_data()
         encoder.stamp = rospy.Time.now()
         encoder.right = self.encoder1_val
