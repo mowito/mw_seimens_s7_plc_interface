@@ -2,6 +2,7 @@
 <launch>
 
   <arg name="plc_ip_addr" default="192.168.0.123"/>
+  <arg name="respawn" default="true" />
 
   <param name = "radius" type = "double" value = "0.075" />
   <param name = "wheel_dist" type = "double" value = "0.435" />
@@ -13,7 +14,7 @@
   <param name = "encoder2_addr" type = "string" value = "MD28" />
 
   <!-- run teleop_plc -->  
-  <node pkg="mw_seimens_s7_plc_interface" type="siemens_plc_controller.py" name="siemens_plc_controller" output="screen"/>
+  <node pkg="mw_seimens_s7_plc_interface" type="siemens_plc_controller.py" name="siemens_plc_controller" output="screen" respawn="$(arg respawn)"/>
 
 
 </launch>
