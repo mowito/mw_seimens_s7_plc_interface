@@ -349,12 +349,12 @@ class TeleopPLC:
         m1_rpm = int(9.549297 * w_r)
         m2_rpm = int(9.549297 * w_l)
 
-        if (w_r < 0):
+        if (m1_rpm < 0):
 	        m1_rpm = m1_rpm + 2**32
         else:
 	        m1_rpm = m1_rpm
 
-        if (w_l < 0):
+        if (m2_rpm < 0):
 	        m2_rpm = m2_rpm + 2**32
         else:
 	        m2_rpm = m2_rpm
