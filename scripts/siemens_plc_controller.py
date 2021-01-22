@@ -378,6 +378,10 @@ class TeleopPLC:
         # Return the linear velocity components(v_x and v_y) and angular velocity(w)
         return v_x, v_y, w
     
+    def __del__(self):
+        print("[PLC Controller]: Terminating PLC control process.... stopping robot")
+        self.s7_plc.plc_write(self.m1_addr, 0)
+        self.s7_plc.plc_write(self.m2_addr, 0)
 
 if __name__ == '__main__':
     # Initializing Node
